@@ -1,0 +1,612 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MiraMo</title>
+<link href="./styles/style.css" rel="stylesheet">
+<script type="text/javascript" src="./styles/jquery.mlens-1.0.min.js"></script> 
+<script type="text/javascript" src="./styles/jquery.js"></script>
+
+<style>
+  p.serif{
+    font-family:"Times New Roman", Times, serif;
+  }
+  p.sansserif{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  h3 {
+      text-align: center;
+    }
+
+</style>
+
+  
+</head>
+
+<body>
+<div class="content">
+
+<h1><strong>Consistent and Controllable Image Animation with Motion Linear Diffusion Transformers</strong>&nbsp;&nbsp;<small></small></h1>
+<p id="authors" class="serif">
+    <a href="https://maxin-cn.github.io/">Xin Ma<sup>1</sup></a>
+    <a href="https://wyhsirius.github.io/">Yaohui Wang<sup>2<dag></sup></a>
+    <a href="https://scholar.google.com/citations?user=_04pkGgAAAAJ&hl=zh-CN">Gengyun Jia<sup>3</sup></a>
+    <a href="https://scholar.google.com/citations?user=3fWSC8YAAAAJ">Xinyuan Chen<sup>2</sup></a> <br>
+    <a href="https://ttwong12.github.io/myself.html">Tien-Tsin Wong<sup>1</sup></a>
+    <a href="https://cunjian.github.io/">Cunjian Chen<sup>1</sup></a>
+    
+    <br>
+    <!-- <a style="font-size: 0.7em"><sup>*</sup>Equal Contribution.</a> <a style="font-size: 0.7em"><sup>✝</sup>Corresponding Author.</a> -->
+    <br>
+    <span style="font-size: 0.8em; margin-top: 0.5em">
+      <a><sup>1</sup>Monash University</a>
+      <a><sup>2</sup>Shanghai Artificial Intelligence Laboratory</a>
+      <a><sup>3</sup>Nanjing University of Posts and Telecommunications</a>
+    </span>
+  </p>
+
+  <font size="+1">
+    <p style="text-align: center;" class="serif">
+      <a href="https://arxiv.org/abs/2407.15642" target="_blank" style="font-weight: bold;">[Paper]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://github.com/maxin-cn/Cinemo" target="_blank" style="font-weight: bold;">[Github]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- <a href="#bibtex" style="font-weight: bold;">[BibTeX]</a> -->
+    </p><br>
+  </font>
+
+  <style>
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      
+    }
+
+    
+  
+    .col {
+      flex: 1;
+      text-align: center;
+     
+    }
+
+    .head {
+      flex: 1;
+      text-align: center;
+      
+    }
+
+    h3 {
+      
+      font-size: 15px; /* 缩小标题的大小 */
+      
+    }
+  
+  
+    img, video {
+      width: 100%; /* 将图片和视频的宽度设置为100%，以使它们在同一行上大小相匹配 */
+      height: auto;
+    }
+
+   
+
+  </style>
+
+<font size="+1">
+    <p class="serif" style="color: red; font-weight: bold">Click to play animations!</Summary></p>
+</font>
+
+<div class="row">
+    <div class="col">
+      <h3>Input Image</h3>
+      <!-- Case 1 Image -->
+      <img class="case-image" src="static/teaser/a_car_driving_on_the_road/0.jpg" alt="Case 1 Image" style="width: 100%;">
+      
+    </div>
+    <div class="col">
+      <h3>Animated Video</h3>
+      <!-- Case 1 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/a_car_driving_on_the_road/a_car_driving_on_the_road.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      <h3>Input Image</h3>
+      <!-- Case 2 Image -->
+      <img class="case-image" src="static/teaser/a_red_car_driving_slowly_on_the_road/0.jpg" alt="Case 2 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      <h3>Animated Video</h3>
+      <!-- Case 2 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/a_red_car_driving_slowly_on_the_road/a_red_car_driving_slowly_on_the_road.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      <h3>Input Image</h3>
+      <!-- Case 3 Image -->
+      <img class="case-image" src="static/teaser/birds_shaking_their_bodies/0.jpg" alt="Case 5 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      <h3>Animated Video</h3>
+      <!-- Case 3 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/birds_shaking_their_bodies/birds_shaking_their_bodies.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="head" >
+      <h3 >"A Car Driving on the Road"</h3>
+    </div>
+
+    <div class="head">
+      <h3>"A Red Car Driving Slowly on the Road"</h3>
+    </div>
+    
+    <div class="head">
+      <h3>"Birds Shaking its Body"</h3>
+    </div>
+
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      
+      <!-- Case 1 Image -->
+      <img class="case-image" src="static/teaser/Bubbles_Floating_Upwards/0.jpg" alt="Case 1 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 1 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/Bubbles_Floating_Upwards/Bubbles_Floating_Upwards.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      
+      <!-- Case 2 Image -->
+      <img class="case-image" src="static/teaser/Candle_Flickering/0.jpg" alt="Case 2 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 2 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/Candle_Flickering/Candle_Flickering.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      
+      <!-- Case 3 Image -->
+      <img class="case-image" src="static/teaser/City_Lightning/0.jpg" alt="Case 5 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 3 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/City_Lightning/City_Lightning.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="head">
+      <h3>"Bubbles Floating Upwards"</h3>
+    </div>
+
+    <div class="head">
+      <h3>"Candle Flickering"</h3>
+    </div>
+    
+    <div class="head">
+      <h3>"City Lightning"</h3>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col">
+      
+      <!-- Case 1 Image -->
+      <img class="case-image" src="static/teaser/Clouds_in_the_Sky_Moving_Slowly/0.jpg" alt="Case 1 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 1 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/Clouds_in_the_Sky_Moving_Slowly/Clouds_in_the_Sky_Moving_Slowly.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      
+      <!-- Case 2 Image -->
+      <img class="case-image" src="static/teaser/Doggy_Barking/0.jpg" alt="Case 2 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 2 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/Doggy_Barking/Doggy_Barking.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="col">
+      
+      <!-- Case 3 Image -->
+      <img class="case-image" src="static/teaser/hummingbird_flying_in_the_air/0.jpg" alt="Case 5 Image" style="width: 100%;">
+    </div>
+    <div class="col">
+      
+      <!-- Case 3 Video -->
+      <video class="clickplay case-video" width="100%" style="max-width: 100%;" autoplay loop>
+        <source src="static/teaser/hummingbird_flying_in_the_air/hummingbird_flying_in_the_air.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="head">
+      <h3>"Clouds in the Sky Moving Slowly"</h3>
+    </div>
+
+    <div class="head">
+      <h3>"Doggy Barking"</h3>
+    </div>
+    
+    <div class="head">
+      <h3>"Hummingbird Flying in the Air"</h3>
+    </div>
+
+  </div>
+
+</p>
+
+  
+
+</div>
+
+<div class="content">
+    <p style="text-align:left; font-size: 2em; font-weight: bold" class="serif">Methodology</p>
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <center>
+                  <img src="static/figs/pipeline.svg" title="" style="max-width:80%;vertical-align:top"/>
+            </center>
+        </div>
+      </div>
+    
+    <p style="font-size: 1.4em" class="serif">
+    The powerful generative capabilities of diffusion transformer models have achieved significant progress in the field of image animation. 
+    However, the quadratic nature of vanilla self-attention in transformer blocks results in significant resource demands, making video generation 
+    computationally expensive. Additionally, maintaining appearance consistency with the static input image and preventing abrupt motion transitions 
+    in the generated animation remain difficult problems. In this paper, we introduce MiraMo that aims to achieve fast generation speed, 
+    better appearance consistency, and motion smoothness. Specifically, we first design a base text-to-video generation model that replaces all 
+    vanilla attention in the transformer blocks with more efficient linear attention, maintaining generation quality while ensuring temporal consistency. 
+    MiraMo then proposes to focus on learning the distribution of motion residuals, rather than directly predicting frames as in existing image animation 
+    methods. During the inference, we further mitigate the sudden motion changes in the animated video by introducing a novel DCT-based noise refinement 
+    strategy. To counteract the over-smoothing of motion, we introduce a dynamics degree control design for better control of the magnitude of motion. Altogether, 
+    these strategies enable MiraMo to produce highly consistent, smooth, and motion-controllable animated results with fast inference. Extensive experiments 
+    compared with several state-of-the-art methods demonstrate the effectiveness and superiority of our proposed approach. In the end, we also demonstrate how 
+    MiraMo can be applied for motion transfer or video editing of any given video.
+
+</div>
+
+
+
+<div class="content">
+  <p style="text-align:left; font-size: 2em; font-weight: bold" class="serif">Comparisons</p>
+  <p style="font-size: 1.4em" class="serif">
+    We shows the animated results generated by different methods using the prompt "the ship sailing on the water".<br>
+    We qualitatively compare our method with both commercial tools and research approaches,
+    including Hailuo, Genmo, ConsistI2V, DynamiCrafter, I2VGen-XL, SEINE, PIA, SVD and Cinemo. 
+  </p>
+  <font size="+1">
+    <p class="serif" style="color: red; font-weight: bold">Click to play the following animations!</p>
+  </font>
+<!--  <span style="color: red; font-weight: bold"></span>-->
+  <!-- <img class="summary-img" src="figs/framework.jpg" style="width:100%;"> <br> -->
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/comparisons/0.png" style="width: 100%;">
+      <h3>Input Image</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/hailuo.mp4" type="video/mp4">
+      </video>
+      <h3>Hailuo</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/genmo_resized.mp4" type="video/mp4">
+      </video>
+      <h3>Genmo</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/consisti2v.mp4" type="video/mp4">
+      </video>
+      <h3>ConsistI2V</h3>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <h3> </h3>
+      <img src="static/figs/blank.jpg" style="width: 100%;">
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/dynamicrafter.mp4" type="video/mp4">
+      </video>
+      <h3>DynamiCrafter</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/i2vgen-xl.mp4" type="video/mp4">
+      </video>
+      <h3>I2VGen-XL</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/comparisons/seine.mp4" type="video/mp4">
+      </video>
+      <h3>SEINE</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-gallery" style="width: 20%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/comparisons/pia.mp4" type="video/mp4">
+          </video>
+          <h3>PIA</h3>
+        </div>
+        <div class="col-gallery" style="width: 20%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/comparisons/svd.mp4" type="video/mp4">
+          </video>
+          <h3>SVD</h3>
+        </div>
+        <div class="col-gallery" style="width: 20%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/comparisons/cinemo.mp4" type="video/mp4">
+          </video>
+          <h3>Cinemo</h3>
+        </div>
+        <div class="col-gallery" style="width: 20%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/comparisons/ours.mp4" type="video/mp4">
+          </video>
+          <h3>Ours</h3>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- <hr style="margin: 30px 0;"> -->
+
+
+
+
+<div class="content">
+  <p style="text-align:left; font-size: 2em; font-weight: bold" class="serif">Analysis</p>
+  <p style="font-size: 1.4em" class="serif">
+    The ablation studies and potential applications are presented here.
+  </p>
+  <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Motion intensity controllability</p>
+  <p style="font-size: 1.4em" class="serif">
+    We demonstrate that our method can finely control the motion intensity of animated videos. The prompts are "car driving". 
+    Please observe the speed at which the background trees move backward in the video to reflect the car's speed.
+  </p>
+  <font size="+1">
+    <p class="serif" style="color: red; font-weight: bold">Click to play the following animations!</p>
+  </font>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/motion_bucket/0.jpg" style="width: 100%;">
+      <h3>Input Image</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/motion_bucket/small.mp4" type="video/mp4">
+      </video>
+      <h3>b=0</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/motion_bucket/middle.mp4" type="video/mp4">
+        </video>
+        <h3>b=9</h3>
+      </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/motion_bucket/large.mp4" type="video/mp4">
+        </video>
+        <h3>b=18</h3>
+      </div>
+  </div>
+
+  <hr style="margin: 30px 0;">
+
+  <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Effectiveness of DCTInit</p>
+  <p style="font-size: 1.4em" class="serif">
+    We demonstrate that the proposed DCTInit can stabilize the video generation process and effectively mitigate sudden motion change; 
+    the DCT frequency domain decomposition method can effectively mitigate the color inconsistency issues caused by the FFT frequency domain decomposition method.
+    Here, "Baseline" refers to the results produced solely by motion flow matching models, without the application of any test-time improvement techniques.
+    The first and second lines prompt "woman smiling" and "tank moving", respectively.
+  </p>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/dct_vs_fft/woman_smiling/0.jpg" style="width: 100%;">
+      <h3>Input Image</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/dct_vs_fft/woman_smiling/baseline.mp4" type="video/mp4">
+      </video>
+      <h3>Baseline</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/dct_vs_fft/woman_smiling/w_fft.mp4" type="video/mp4">
+        </video>
+        <h3>FFTInit</h3>
+      </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/dct_vs_fft/woman_smiling/w_dctinit.mp4" type="video/mp4">
+      </video>
+      <h3>DCTInit</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/dct_vs_fft/tank_moving/0.jpg" style="width: 100%;">
+      <h3>Input Image</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/dct_vs_fft/tank_moving/baseline.mp4" type="video/mp4">
+        </video>
+        <h3>Baseline</h3>
+      </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/dct_vs_fft/tank_moving/w_fft.mp4" type="video/mp4">
+      </video>
+      <h3>FFTInit</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/dct_vs_fft/tank_moving/w_dctinit.mp4" type="video/mp4">
+      </video>
+      <h3>DCTInit</h3>
+    </div>
+  </div>
+
+  <hr style="margin: 30px 0;">
+
+  <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Motion control by prompt</p>
+  <p style="font-size: 1.4em" class="serif">
+    We demonstrate that our method does not rely on complex guiding instructions and even simple textual prompts can yield satisfactory visual effects.
+  </p>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/motion_control/0.jpg" style="width: 100%;">
+      <h3>Input Image</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/motion_control/fireworks.mp4" type="video/mp4">
+      </video>
+      <h3>"Fireworks"</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/motion_control/leaves_swaying.mp4" type="video/mp4">
+      </video>
+      <h3>"Leaves Swaying"</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/motion_control/lightning.mp4" type="video/mp4">
+        </video>
+        <h3>"Lightning"</h3>
+      </div>
+  </div>
+
+  <hr style="margin: 30px 0;">
+
+  <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Motion transfer/Video editing</p>
+  <p style="font-size: 1.4em" class="serif">
+    We demonstrate that our proposed method can also be applied to motion transfer and video editing. We use the off-the-shelf image editing method to edit the first frame of the input video.
+  </p>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+        <h3>Original video</h3>
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/video_editing/a_man_walking_on_the_beach/a_man_walking_on_the_beach.mp4" type="video/mp4">
+        </video>
+      </div>
+    <div class="col-gallery" style="width: 20%;">
+      <h3>First frame</h3>
+      <img src="static/video_editing/a_man_walking_on_the_beach/0.jpg" style="width: 100%;">
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <h3>Edited first frame</h3>
+        <img src="static/video_editing/a_man_walking_in_the_park/0.jpg" style="width: 100%;">
+      </div>
+    <div class="col-gallery" style="width: 20%;">
+      <h3>Output video</h3>
+      <video class="clickplay" width="100%" autoplay loop>
+        <source src="static/video_editing/a_man_walking_in_the_park/a_man_walking_in_the_park.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+    <div class="row">
+        <div class="col-gallery" style="width: 20%;">
+            <video class="clickplay" width="100%" autoplay loop>
+              <source src="static/video_editing/a_corgi_walking_in_the_park_at_sunrise_oil_painting_style/a_corgi_walking_in_the_park_at_sunrise_oil_painting_style.mp4" type="video/mp4">
+            </video>
+          </div>
+        <div class="col-gallery" style="width: 20%;">
+          <img src="static/video_editing/a_corgi_walking_in_the_park_at_sunrise_oil_painting_style/0.jpg" style="width: 100%;">
+        </div>
+        <div class="col-gallery" style="width: 20%;">
+            <img src="static/video_editing/editing_a_corgi_walking_in_the_park_at_sunrise,_oil_painting_style/0.jpg" style="width: 100%;">
+          </div>
+        <div class="col-gallery" style="width: 20%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/video_editing/editing_a_corgi_walking_in_the_park_at_sunrise,_oil_painting_style/editing_a_corgi_walking_in_the_park_at_sunrise,_oil_painting_style.mp4" type="video/mp4">
+          </video>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+    
+  
+   
+</div>
+
+
+<div class="content">
+  <p class="serif">
+    ©Xin Ma &middot; Powered by <a
+            href="https://dreambooth.github.io/">DreamBooth</a>
+    <!-- Project page template is borrowed from <a href="https://dreambooth.github.io/">DreamBooth</a>. -->
+  </p>
+</div>
+
+</body>
+
+<script>
+var videos = document.getElementsByClassName("clickplay");
+for (var i = 0; i < videos.length; i++) {
+  videos[i].addEventListener("click", function() {
+    this.play();
+  });
+  videos[i].addEventListener("ended", function() {
+    this.pause();
+    this.currentTime = 0;
+  });
+}
+</script>
+
+</html>
