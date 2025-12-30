@@ -5,6 +5,7 @@
 <link href="./styles/style.css" rel="stylesheet">
 <script type="text/javascript" src="./styles/jquery.mlens-1.0.min.js"></script> 
 <script type="text/javascript" src="./styles/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
   p.serif{
@@ -574,8 +575,75 @@
 
     </div>
 
-</div>
+    <hr style="margin: 30px 0;">
+    <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Different spatio-temporal modeling</p>
+    <p style="font-size: 1.4em" class="serif">
+        We demonstrate that the spatio-temporally decoupled modeling strategy yields more temporally continuous and coherent results than the full 3D modeling strategy.
+    </p>
 
+    <div class="row">
+        <div class="col-gallery" style="width: 23%;">
+            <video class="clickplay" width="100%" autoplay loop>
+              <source src="static/different_spatio_temporal_modeling/3d.mp4" type="video/mp4">
+            </video>
+            <h3>Full 3D modeling</h3>
+        </div>
+
+        <div class="col-gallery" style="width: 23%;">
+          <video class="clickplay" width="100%" autoplay loop>
+            <source src="static/different_spatio_temporal_modeling/spe.mp4" type="video/mp4">
+          </video>
+          <h3>Decoupled modeling</h3>
+        </div>
+
+    </div>
+
+    <hr style="margin: 30px 0;">
+    <p style="text-align:left; font-size: 1.6em; font-weight: bold" class="serif">Different motion residual definitions</p>
+    <p style="font-size: 1.4em" class="serif">
+        We show that the motion residual model \(\mathbf{M}_{ori}=\{z_2-z_1, z_3-z_1, \ldots, z_N-z_1\}\) used in the original paper outperforms the alternative \(\mathbf{M}_{alt}=\{z_2-z_1, z_3-z_2, \ldots, z_N-z_{N-1}\}\), as videos generated with the other motion residual model exhibit significant degradation.
+    </p>
+
+  <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <!-- <h3>First frame</h3> -->
+      <img src="static/different_motion_residual/Flowers_Swaying/0.jpg" style="width: 100%;">
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <!-- <h3>Original video</h3> -->
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/different_motion_residual/Flowers_Swaying/Flowers_Swaying_motion2.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <!-- <h3>Original video</h3> -->
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/different_motion_residual/Flowers_Swaying/Flowers_Swaying_motion1.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="row">
+    <div class="col-gallery" style="width: 20%;">
+      <img src="static/different_motion_residual/Bubbles_Floating_Upwards/0.jpg" style="width: 100%;">
+      <h3>First frame</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/different_motion_residual/Bubbles_Floating_Upwards/Bubbles_Floating_Upwards_motion2.mp4" type="video/mp4">
+        </video>
+        <h3>Motion residual \(\mathbf{M}_{alt}\)</h3>
+    </div>
+    <div class="col-gallery" style="width: 20%;">
+        <video class="clickplay" width="100%" autoplay loop>
+          <source src="static/different_motion_residual/Bubbles_Floating_Upwards/Bubbles_Floating_Upwards_motion1.mp4" type="video/mp4">
+        </video>
+        <h3>Motion residual \(\mathbf{M}_{ori}\)</h3>
+    </div>
+
+
+    </div>
+
+</div>
 
 
 </div>
